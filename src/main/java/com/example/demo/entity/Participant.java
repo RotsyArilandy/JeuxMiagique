@@ -24,7 +24,7 @@ public class Participant{
     @Column (name = "role")
     private Role role = Role.PARTICIPANT;
 
-    @Column (name = "delegation")
+    @JoinColumn (name = "delegation")
     @ManyToOne
     private Delegation delegation;
 }

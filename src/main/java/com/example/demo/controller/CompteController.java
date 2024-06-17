@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class ConnexionController {
+public class CompteController {
     @Autowired
     private CompteService connexionService;
 
@@ -23,5 +23,7 @@ public class ConnexionController {
         } catch (CompteIntrouvableException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
+
     }
 }
+

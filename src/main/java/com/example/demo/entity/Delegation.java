@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 @Entity
 @Data
 @Table(name = "delegation_entite")
@@ -23,6 +25,9 @@ public class Delegation {
     private int nbArgent;
     @Column (name = "medailleBronze")
     private int nbBronze;
+
+    @OneToMany(mappedBy = "delegation")
+    private ArrayList<Participant> delegation;
 
 
 }

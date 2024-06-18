@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Epreuve;
 import com.example.demo.entity.Spectateur;
 import com.example.demo.exceptions.CompteDejaExistantException;
 import com.example.demo.repository.SpectateurRepository;
@@ -19,36 +20,38 @@ public class SpectateurController {
     @Autowired
     private SpectateurService spectateurService;
 
+    //S'inscrire en tant que spectateur
+    @PostMapping("/create")
+    public Spectateur addSpectateur (@RequestBody Spectateur spectateur) throws CompteDejaExistantException {
+        return spectateurService.saveSpectateur(spectateur);
+    }
+
     //Récupérer un spectateur par id
     @GetMapping ("/{id}")
     public Optional<Spectateur> getSpectateurById (@PathVariable Long id){
         return spectateurService.findSpectateurById(id);
     }
 
-    //Ajouter un spectateur
-    @PostMapping("/create")
-    public Spectateur addSpectateur (@RequestBody Spectateur spectateur) throws CompteDejaExistantException {
-        return spectateurService.saveSpectateur(spectateur);
-    }
 
-    //Supprimer un spectateur
+    //Se désinscrire en tant que spectateur
     @DeleteMapping("/delete/{id}")
     public String deleteSpectateur(@PathVariable Long id){
         spectateurService.deleteSpectateurById(id);
         return "Le spectateur "+ id +" a bien été supprimé";
     }
 
-    @DeleteMapping(("/deleteAll"))
-    public String deleteAllSpectateur(){
-        spectateurService.deleteAll();
-        return "Toutes les participants ont bien été supprimées";
+    //Consulter le programme des épreuves
+    @GetMapping("/allEpreuves")
+    public List<Epreuve> getAllEpreuve(){
+        return spectateurService.findAll();
     }
 
+    //Réserver les billets
 
-    //Récupérer la liste de tous les spectateurs
-    @GetMapping("/listeSpectateur")
-    public List<Spectateur> getAllSpectateur(){
-        return spectateurService.findAllSpectateurs();
-    }
+    //Payer en ligne
+
+    //Recevoir les billets electroniquement
+
+    //Annuler reservation
 
 }

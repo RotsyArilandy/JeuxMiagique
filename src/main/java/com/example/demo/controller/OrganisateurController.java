@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Delegation;
+import com.example.demo.entity.Organisateur;
 import com.example.demo.entity.Participant;
 import com.example.demo.exceptions.CompteDejaExistantException;
 import com.example.demo.exceptions.CompteIntrouvableException;
@@ -77,20 +78,19 @@ public class OrganisateurController {
         return "Toutes les participants ont bien été supprimées";
     }
 
-    /*
-    //Ajouter un organisateur ?????
+
+    //Ajouter un organisateur
     @PostMapping("/create")
-    public Organisateur addOrganisation (@RequestBody Organisateur organisateur){
+    public Organisateur addOrganisation (@RequestBody Organisateur organisateur) throws CompteDejaExistantException {
         return organisateurService.saveOrganisteur(organisateur);
     }
 
     //Supprimer une organisateur
     @DeleteMapping("/delete/{id}")
-    public String deleteOrganisation(@PathVariable Long id){
+    public String deleteOrganisation(@PathVariable Long id) throws CompteIntrouvableException {
         organisateurService.deleteOrganisationById(id);
         return "L'organisateur "+ id +" a bien été supprimé";
     }
-
 
     //Récupérer la liste de toutes les organisateurs
     @GetMapping("/listeOrganisateurs")
@@ -99,6 +99,17 @@ public class OrganisateurController {
         return organisateurService.findAllOrganisateur();
     }
 
-     */
+    //Gérer les calendrier des épreuves
+
+    //Définir le nombre de participants max pour les épreuves
+
+    //Définir le nombre de billets dispo à la vente pour chaque épreuve
+
+    //Enregister le résultats
+
+    //Consulter les statistiques
+
+
+
 
 }

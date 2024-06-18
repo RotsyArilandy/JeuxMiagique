@@ -1,14 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Controleur;
-import com.example.demo.entity.Organisateur;
-import com.example.demo.entity.Participant;
-import com.example.demo.entity.Spectateur;
+import com.example.demo.entity.*;
 import com.example.demo.exceptions.CompteDejaExistantException;
-import com.example.demo.repository.ControleurRepository;
-import com.example.demo.repository.OrganisateurRepository;
-import com.example.demo.repository.ParticipantRepository;
-import com.example.demo.repository.SpectateurRepository;
+import com.example.demo.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.InjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +22,8 @@ public class SpectateurService {
     private ParticipantRepository participantRepository;
     @Autowired
     private ControleurRepository controleurRepository;
+    @Autowired
+    private EpreuveRepository epreuveRepository;
 
     public Spectateur saveSpectateur(Spectateur spectateur) throws CompteDejaExistantException {
         Participant p = participantRepository.findByMail(spectateur.getMail());
@@ -43,31 +39,26 @@ public class SpectateurService {
                 throw new CompteDejaExistantException("Ce mail est déjà utilisé pour un compte Controleur : " + spectateur.getMail());
             }
         }
-
         return spectateurRepository.save(spectateur);
     }
 
-
-        public Optional<Spectateur> findSpectateurById(Long id){
-
-
-            return spectateurRepository.findById(id);
-        }
-
-        public void deleteSpectateurById (Long id){
-
-
-            spectateurRepository.deleteById(id);
-        }
-
-        public List<Spectateur> findAllSpectateurs () {
-
-            return spectateurRepository.findAll();
-        }
-
-        public void deleteAll () {
-            spectateurRepository.deleteAll();
-        }
+    //Supprimer son compte Spectateur
+    public void deleteSpectateurById (Long id){
+        spectateurRepository.deleteById(id);
     }
+
+    //Afficher son compte Spectateur par ID
+    public Optional<Spectateur> findSpectateurById(Long id){
+        return spectateurRepository.findById(id);
+    }
+
+    //Récupérer liste de toutes les épreuves
+    public List<Epreuve> findAll() {
+        return epreuveRepository.findAll();
+    }
+
+
+
+}
 
 

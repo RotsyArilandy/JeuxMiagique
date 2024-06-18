@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Epreuve;
 import com.example.demo.entity.Participant;
 import com.example.demo.entity.Spectateur;
+import com.example.demo.service.EpreuveService;
 import com.example.demo.service.ParticipantService;
 import com.example.demo.service.SpectateurService;
 import lombok.RequiredArgsConstructor;
@@ -19,38 +21,19 @@ public class ParticipantController {
     @Autowired
     private ParticipantService participantService;
 
-    //Récupérer un le participant par id
-    @GetMapping("/{id}")
-    public Optional<Participant> getParticipantById (@PathVariable Long id){
-        return participantService.findParticipantById(id);
+    @Autowired
+    private EpreuveService epreuveService;
+
+
+    //Récupérer la liste de épreuves dispo
+    @GetMapping("/listeEpreuve")
+    public List<Epreuve> getAllEpreuve(){
+        return epreuveService.findAllEpreuve();
     }
 
-    //Ajouter un participant
-    @PostMapping("/create")
-    public Participant addParticipant (@RequestBody Participant participant){
-        return participantService.saveParticipant(participant);
-    }
-
-    //Supprimer un participant
-    @DeleteMapping("/delete/{id}")
-    public String deleteParticipant(@PathVariable Long id){
-
-        participantService.deleteParticipantById(id);
-        return "Le participant "+ id +" a bien été supprimé";
-    }
+    //S'inscrire au épreuve
 
 
-    @DeleteMapping(("/deleteAll"))
-    public String deleteAllParticipant(){
-        participantService.deleteAll();
-        return "Toutes les participants ont bien été supprimées";
-    }
-
-
-    //Récupérer la liste de tous les participants
-    @GetMapping("/listePraticipant")
-    public List<Participant> getAllParticipant(){
-        return participantService.findAllParticipant();
-    }
+    //Consulter les résultats + Classement délégation
 
 }

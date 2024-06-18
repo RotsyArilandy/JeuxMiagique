@@ -141,6 +141,27 @@ public class OrganisateurService {
     }
 
 
+    //Créer un organisateur + vérification
+    public Organisateur saveOrganisteur(Organisateur organisateur) throws CompteDejaExistantException {
+        Organisateur o = organisateurRepository.findByMail(organisateur.getMail());
+        if (o != null){
+            throw new CompteDejaExistantException("Cet organisateur existe déjà");
+        }
+        return organisateurRepository.save(organisateur);
+    }
 
+    //Supprimer un organisateur par ID
+    public String deleteOrganisationById(Long id) throws CompteIntrouvableException {
+        Optional<Organisateur> o = organisateurRepository.findById(id);
+        if  ( o == null){
+            throw new CompteIntrouvableException("Cet organisateur n'existe pas");
+        }
+        return "L'organisateur "+id + " a bien été supprimé";
 
+    }
+
+    //Récupérer la liste de tous les organisateurs
+    public List<Organisateur> findAllOrganisateur() {
+        return organisateurRepository.findAll();
+    }
 }

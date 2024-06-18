@@ -18,31 +18,7 @@ public class ControleurController {
     @Autowired
     ControleurService controleurService;
 
-    @GetMapping("/{id}")
-    public Optional<Controleur> getControleurById (@PathVariable Long id){
-        return controleurService.findControleurById(id);
-    }
+    //Scanner les billets
 
-    @PostMapping("/create")
-    public Controleur addControlleur (@RequestBody Controleur controleur){
-        return controleurService.saveControleur(controleur);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public String deleteControleur(@PathVariable Long id){
-        controleurService.deleteControleurById(id);
-        return "Le controlleur "+id+" a bien été supprimé";
-    }
-
-    @DeleteMapping(("/deleteAll"))
-    public String deleteControleur(){
-        controleurService.deleteAll();
-        return "Toutes les controleurs ont bien été supprimées";
-    }
-
-    @GetMapping("/listeControleur")
-    public List<Controleur> getAllControleur(){
-        return controleurService.findAllControleur();
-    }
-
+    //Vérifier validier billet
 }

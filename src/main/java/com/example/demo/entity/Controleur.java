@@ -22,5 +22,11 @@ public class Controleur {
     @Column (name = "role")
     private Role role = Role.CONTROLLEUR;
 
+    public Controleur(String nom, String prenom, String mail) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.mail = mail ;
+        this.role = Role.CONTROLLEUR;
+    }
 }
 

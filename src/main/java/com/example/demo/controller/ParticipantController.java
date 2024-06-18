@@ -25,7 +25,7 @@ public class ParticipantController {
         return participantService.findParticipantById(id);
     }
 
-    //Ajouter un paticipant
+    //Ajouter un participant
     @PostMapping("/create")
     public Participant addParticipant (@RequestBody Participant participant){
         return participantService.saveParticipant(participant);

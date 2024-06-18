@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Spectateur;
+import com.example.demo.exceptions.CompteDejaExistantException;
 import com.example.demo.repository.SpectateurRepository;
 import com.example.demo.service.SpectateurService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class SpectateurController {
 
     //Ajouter un spectateur
     @PostMapping("/create")
-    public Spectateur addSpectateur (@RequestBody Spectateur spectateur){
+    public Spectateur addSpectateur (@RequestBody Spectateur spectateur) throws CompteDejaExistantException {
         return spectateurService.saveSpectateur(spectateur);
     }
 

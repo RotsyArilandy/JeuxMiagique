@@ -5,8 +5,8 @@ import com.example.demo.entity.Organisateur;
 import com.example.demo.entity.Participant;
 import com.example.demo.exceptions.CompteDejaExistantException;
 import com.example.demo.exceptions.CompteIntrouvableException;
-import com.example.demo.exceptions.DelegationDejaExistant;
-import com.example.demo.exceptions.DelegationIntrouvable;
+import com.example.demo.exceptions.DelegationDejaExistantException;
+import com.example.demo.exceptions.DelegationIntrouvableException;
 import com.example.demo.service.OrganisateurService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +25,13 @@ public class OrganisateurController {
 
     //Créer une délégation
     @PostMapping ("/createDelegation")
-    public Delegation newDelegation (String nomDelegation) throws DelegationDejaExistant {
+    public Delegation newDelegation (String nomDelegation) throws DelegationDejaExistantException {
         return organisateurService.saveDelegation(nomDelegation);
     }
 
     //Afficher les délégation par Id
     @GetMapping("/{id}")
-    public <Optional> java.util.Optional<Delegation> getDelegation(Long id) throws DelegationIntrouvable {
+    public <Optional> java.util.Optional<Delegation> getDelegation(Long id) throws DelegationIntrouvableException {
         return organisateurService.findDelegation(id);
     }
 
@@ -43,7 +43,7 @@ public class OrganisateurController {
 
     //Supprimer une délegation
     @DeleteMapping("/deleteDelegation")
-    public String deleteDelegation (String d) throws DelegationIntrouvable {
+    public String deleteDelegation (String d) throws DelegationIntrouvableException {
         return organisateurService.deleteDelegation(d);
     }
 

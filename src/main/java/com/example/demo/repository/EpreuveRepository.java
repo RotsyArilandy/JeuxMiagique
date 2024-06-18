@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EpreuveRepository extends JpaRepository<Epreuve, Long> {
+    Epreuve findByName(String nomEpreuve);
 }

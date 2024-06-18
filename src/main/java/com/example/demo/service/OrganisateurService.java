@@ -3,8 +3,8 @@ package com.example.demo.service;
 import com.example.demo.entity.*;
 import com.example.demo.exceptions.CompteDejaExistantException;
 import com.example.demo.exceptions.CompteIntrouvableException;
-import com.example.demo.exceptions.DelegationDejaExistant;
-import com.example.demo.exceptions.DelegationIntrouvable;
+import com.example.demo.exceptions.DelegationDejaExistantException;
+import com.example.demo.exceptions.DelegationIntrouvableException;
 import com.example.demo.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +29,10 @@ public class OrganisateurService {
     private DelegationRepository delegationRepository;
 
     // Afficher une délégation
-    public Optional<Delegation> findDelegation (Long id) throws DelegationIntrouvable {
+    public Optional<Delegation> findDelegation (Long id) throws DelegationIntrouvableException {
         Optional <Delegation> d = delegationRepository.findById(id);
         if (d == null){
-            throw new DelegationIntrouvable("La délégation que vous recherchez n'existe pas");
+            throw new DelegationIntrouvableException("La délégation que vous recherchez n'existe pas");
         }
         return d;
     }
@@ -49,10 +49,10 @@ public class OrganisateurService {
     }
 
     //Supprimer une délegation
-    public String deleteDelegation(String nomDelegation) throws DelegationIntrouvable {
+    public String deleteDelegation(String nomDelegation) throws DelegationIntrouvableException {
         Delegation d = delegationRepository.findByNom(nomDelegation);
         if (d == null){
-            throw new DelegationIntrouvable("La délégation que vous essayez de supprimer n'existe pas");
+            throw new DelegationIntrouvableException("La délégation que vous essayez de supprimer n'existe pas");
         }
         delegationRepository.delete(d);
         return "La délégation a bien été supprimée: "+nomDelegation;
@@ -60,10 +60,10 @@ public class OrganisateurService {
 
 
     //Creer une delegation
-    public Delegation saveDelegation(String nomDelegation) throws DelegationDejaExistant {
+    public Delegation saveDelegation(String nomDelegation) throws DelegationDejaExistantException {
         Delegation d = delegationRepository.findByNom( nomDelegation);
         if (d != null) {
-            throw new DelegationDejaExistant("Le nom de la délégation que essayez de créer exst déjà pris: " + d.getNom());
+            throw new DelegationDejaExistantException("Le nom de la délégation que essayez de créer exst déjà pris: " + d.getNom());
         }
         return delegationRepository.save(new Delegation(nomDelegation,0,0,0 , new ArrayList<Participant>()));
 

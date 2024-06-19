@@ -28,15 +28,16 @@ private int nbArgent = 0;
 @Nullable
 @Column (name = "medailleBronze")
 private int nbBronze = 0;
+
 @Nullable
 @OneToMany(mappedBy = "delegation")
 private ArrayList<Participant> participants ;
 
-public Delegation(String nomDelegation, int i, int i1, int i2, ArrayList<Participant> participants) {
+public Delegation(String nomDelegation, int i, int i1, int i2) {
    this.nom = nomDelegation;
    this.nbOr = i;
    this.nbArgent = i2;
    this.nbBronze = i2;
-   this.participants = participants;
+   this.participants = new ArrayList<>();
 }
 }

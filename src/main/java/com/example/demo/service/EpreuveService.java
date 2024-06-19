@@ -60,4 +60,10 @@ public class EpreuveService {
         }
 
     }
+
+    //Ajouter
+    public String addEpreuve(String mail, String nomEpreuve) {
+        return "";
+    }
+
 }

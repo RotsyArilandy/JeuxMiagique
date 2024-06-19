@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Controleur;
+import com.example.demo.exceptions.BilletDejaUtiliseException;
 import com.example.demo.exceptions.BilletIntrouvableException;
+import com.example.demo.exceptions.MauvaisDroitsException;
 import com.example.demo.repository.ControleurRepository;
 import com.example.demo.service.ControleurService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +22,8 @@ public class ControleurController {
     ControleurService controleurService;
 
     //Vérifier validié billet
-    @GetMapping
-    private String validerBillet(@PathVariable Long idB) throws BilletIntrouvableException {
-        return controleurService.validerBillet(idB);
+    @PutMapping("/validerBillet/{mail}/{idB}")
+    private String validerBillet(@PathVariable String billet , @PathVariable Long idB) throws BilletIntrouvableException, MauvaisDroitsException, BilletDejaUtiliseException {
+        return controleurService.validerBillet(billet,idB);
     }
 }

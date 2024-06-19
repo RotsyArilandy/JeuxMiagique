@@ -53,12 +53,9 @@ public class SpectateurService {
     }
 
     //Récupérer liste de toutes les épreuves
-    public List<Epreuve> findAll() {
+    public List<Epreuve> findAllEpreuve() {
         return epreuveRepository.findAll();
     }
-
-
-
 }
 
 

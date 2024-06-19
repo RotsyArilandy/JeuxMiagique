@@ -28,12 +28,11 @@ public class Participant{
     @ManyToOne
     private Delegation delegation;
 
-    public Participant(String nom, String prenom, String mail, Delegation delegation) {
+    public Participant(String nom, String prenom, String mail) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
-        this.delegation = delegation;
         this.role = Role.PARTICIPANT;
     }
 }

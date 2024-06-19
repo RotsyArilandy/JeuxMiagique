@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.entity.*;
 import com.example.demo.exceptions.CompteDejaExistantException;
+import com.example.demo.exceptions.MauvaisDroitsException;
+import com.example.demo.exceptions.ParticipantIntrouvableException;
 import com.example.demo.repository.ControleurRepository;
 import com.example.demo.repository.OrganisateurRepository;
 import com.example.demo.repository.ParticipantRepository;
@@ -28,7 +30,7 @@ public class ParticipantService {
     private ControleurRepository controleurRepository;
 
     //Création de participant avec vérification
-    public Participant saveParticipant(String nom , String prenom ,  String mail, Delegation del) throws CompteDejaExistantException {
+    public Participant saveParticipant(String nom, String prenom, String mail, Delegation del) throws CompteDejaExistantException {
         Participant p = participantRepository.findByMail(mail);
         Organisateur o = organisateurRepository.findByMail(mail);
         Controleur c = controleurRepository.findByMail(mail);
@@ -45,26 +47,28 @@ public class ParticipantService {
         return participantRepository.save(new Participant(nom, prenom, mail, del));
     }
 
-    //Supprimer un participant avec vérification
-
-
-    //Sauvegarder un participant avec vérification
-    public Participant saveParticipant(Participant participant) {
-
-        return participantRepository.save(participant);
+    //Supprimer un participant avec vérification par Organisateur
+    public String supprimerParticipant(String mail, Participant participant) throws ParticipantIntrouvableException, MauvaisDroitsException {
+        Organisateur o = organisateurRepository.findByMail(mail);
+        Participant p = participantRepository.findByMail(participant.getMail());
+        if (p == null){
+            throw new ParticipantIntrouvableException("La participant que vous voulez supprimer n'existe pas");
+        }
+        else if( o == null || o.getRole() != Role.ORGANISATEUR){
+            throw new MauvaisDroitsException("Seul un organisateur peru supprimer un participant");
+        }
+        else{
+            participantRepository.deleteById(p.getId());
+        }
+        return "La participant a bien été supprimé";
     }
+
 
     // Rechercher un participant
-    public Optional<Participant> findParticipantById(Long id) {
-
-        return participantRepository.findById(id);
+    public Participant findParticipant(String mail) {
+        return participantRepository.findByMail(mail);
     }
 
-    //Supprimer un participant
-    public void deleteParticipantById(Long id) {
-
-        participantRepository.deleteById(id);
-    }
 
     //Afficher la liste des participants
     public List<Participant> findAllParticipant() {
@@ -72,8 +76,6 @@ public class ParticipantService {
         return participantRepository.findAll();
     }
 
-    public void deleteAll() {
-
-        participantRepository.deleteAll();
-    }
 }
+
+

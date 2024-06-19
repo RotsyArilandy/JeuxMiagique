@@ -4,6 +4,8 @@ import com.example.demo.entity.Billet;
 import com.example.demo.entity.Epreuve;
 import com.example.demo.entity.Spectateur;
 import com.example.demo.exceptions.CompteDejaExistantException;
+import com.example.demo.exceptions.CompteSpectateurIntrouvableException;
+import com.example.demo.exceptions.EpreuveIntrouvableException;
 import com.example.demo.exceptions.ReservationIntrouvableException;
 import com.example.demo.repository.BilletRepository;
 import com.example.demo.repository.SpectateurRepository;
@@ -28,7 +30,7 @@ public class SpectateurController {
 
 
     //S'inscrire en tant que spectateur
-    @PostMapping("/create")
+    @PostMapping("/create/{mail}")
     public Spectateur addSpectateur (@RequestBody Spectateur spectateur) throws CompteDejaExistantException {
         return spectateurService.saveSpectateur(spectateur);
     }
@@ -44,28 +46,33 @@ public class SpectateurController {
     @DeleteMapping("/delete/{id}")
     public String deleteSpectateur(@PathVariable Long id){
         spectateurService.deleteSpectateurById(id);
-        return "Le spectateur "+ id +" a bien été supprimé";
+        return "Le spectateur "+ id +"a bien été supprimé";
     }
 
     //Consulter le programme des épreuves
     @GetMapping("/allEpreuves")
     public List<Epreuve> getAllEpreuve(){
-        return spectateurService.findAll();
+        return spectateurService.findAllEpreuve();
     }
 
     //Réserver les billets
     @PostMapping("/reserverBillet/{mail}/{idE}")
-    public String reserverBillet(@PathVariable String mail, @PathVariable String nomEpreuve){
+    public String reserverBillet(@PathVariable String mail, @PathVariable String nomEpreuve) throws CompteSpectateurIntrouvableException, EpreuveIntrouvableException {
         return billetService.saveReservartion(mail,nomEpreuve);
     }
 
+
     //Annuler reservation
     @DeleteMapping("/annulerBillet/{mail}/{idE}")
-    public String annulerBillet(@PathVariable Long idBillet, @PathVariable Long idSpectateur) throws ReservationIntrouvableException {
-        return billetService.cancelReservation(idBillet,idSpectateur);
+    public String annulerBillet(@PathVariable Long idBillet, @PathVariable String mail) throws ReservationIntrouvableException, CompteSpectateurIntrouvableException {
+        return billetService.cancelReservation(idBillet,mail);
     }
 
     //Payer en ligne
+    @PutMapping("/payerBillet/{mail}/{idB}")
+    public String payerBillet(@PathVariable String mail, @PathVariable Long idBillet) throws CompteSpectateurIntrouvableException, ReservationIntrouvableException {
+        return billetService.payer(mail,idBillet);
+    }
 
     //Recevoir les billets electroniquement
 

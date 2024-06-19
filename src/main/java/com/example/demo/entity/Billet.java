@@ -15,11 +15,16 @@ public class Billet {
     private Long id;
     @JoinColumn (name = "idE")
     private Long idEpreuve;
-    @JoinColumn (name = "")
+    @JoinColumn (name = "idSpectateur")
     private Long idSpectateur;
     @Column (name = "prixBillet")
     private Long prixBillet;
     @Column (name = "etatBillet")
     private Etat etatBillet;
 
+    public Billet(Long idEpreuve, Long idSpectateur, Etat etatBillet) {
+        this.idEpreuve = idEpreuve;
+        this.idSpectateur = idSpectateur;
+        this.etatBillet = etatBillet;
+    }
 }

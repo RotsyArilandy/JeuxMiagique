@@ -62,7 +62,7 @@ public class OrganisateurController {
 
     //Creer un participant
     @PostMapping("/createParticipant/{mail}")
-    public String addParticipant (@PathVariable String n, @PathVariable String nom , @PathVariable String prenom ,  @PathVariable String mail, @PathVariable String del) throws CompteDejaExistantException, MauvaisDroitsException, CompteIntrouvableException {
+    public String addParticipant (@PathVariable String n, @PathVariable String nom , @PathVariable String prenom ,  @PathVariable String mail, @PathVariable String del) throws CompteDejaExistantException, MauvaisDroitsException, CompteIntrouvableException, DelegationIntrouvableException {
         return organisateurService.saveParticipant(n,nom ,prenom ,mail,del);
     }
 

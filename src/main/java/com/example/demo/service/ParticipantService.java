@@ -44,7 +44,7 @@ public class ParticipantService {
                 throw new CompteDejaExistantException("Ce mail est déjà utilisé pour un compte Controleur : " + mail);
             }
         }
-        return participantRepository.save(new Participant(nom, prenom, mail, del));
+        return participantRepository.save(new Participant(nom, prenom, mail));
     }
 
     //Supprimer un participant avec vérification par Organisateur

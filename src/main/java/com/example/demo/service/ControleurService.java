@@ -1,7 +1,12 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Billet;
 import com.example.demo.entity.Controleur;
+import com.example.demo.entity.Etat;
 import com.example.demo.entity.Organisateur;
+import com.example.demo.exceptions.BilletDejaUtiliseException;
+import com.example.demo.exceptions.BilletIntrouvableException;
+import com.example.demo.repository.BilletRepository;
 import com.example.demo.repository.ControleurRepository;
 import com.example.demo.repository.SpectateurRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +23,9 @@ public class ControleurService {
 
     @Autowired
     private ControleurRepository controleurRepository;
+
+    @Autowired
+    private BilletRepository billetRepository;
 
     public void deleteAll(){
         controleurRepository.deleteAll();
@@ -37,5 +45,20 @@ public class ControleurService {
 
     public List<Controleur> findAllControleur() {
         return controleurRepository.findAll();
+    }
+
+    //Vérifier validité des billets
+    public String validerBillet(Long idB) throws BilletIntrouvableException {
+        Billet b = billetRepository.getById(idB);
+        if (b == null) {
+            throw new BilletIntrouvableException("Le billet est introuvable");
+        }
+        else if (b.getEtatBillet() == Etat.VALIDE ){
+            throw new BilletDejaUtiliseException("Le billetv a déjà été utilisé")
+        }
+        else {
+            b.setEtatBillet(Etat.VALIDE);
+            return "Votre billet a été validé";
+        }
     }
 }
